@@ -1,6 +1,16 @@
 ---
 version: '2'
 services:
+  mongodb_container:
+    image: mongo:latest
+    container_name: dev_mongodb
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: dbuser
+      MONGO_INITDB_ROOT_PASSWORD: dbpassword
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb_data_container:/data/db
   cache:
     image: redis:7.0.4-alpine
     container_name: dev_redis
@@ -202,4 +212,6 @@ services:
       KAFKA_REST_SCHEMA_REGISTRY_URL: 'http://schema-registry:8081'
 volumes:
   cache:
+    driver: local
+  mongodb_data_container:
     driver: local
